@@ -8,8 +8,8 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=wifidog
-PKG_VERSION:=20150313
-PKG_RELEASE=$(PKG_SOURCE_VERSION)
+PKG_VERSION:=1.2.1
+PKG_RELEASE=1
 
 
 PKG_LICENSE:=GPL-2.0
@@ -17,7 +17,7 @@ PKG_MAINTAINER:=Michael Haas <haas@computerlinguist.org>
 PKG_LICENSE_FILES:=COPYING
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_URL:=git://github.com/mhaas/wifidog-gateway.git
+PKG_SOURCE_URL:=git://github.com/wifidog/wifidog-gateway.git
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
 PKG_SOURCE_VERSION:=717512c17e2689386c663869368d40e8e71e0bc6
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION).tar.gz
