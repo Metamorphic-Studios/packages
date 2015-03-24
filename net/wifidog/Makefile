@@ -8,7 +8,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=wifidog
-PKG_VERSION:=1.2.1
+PKG_VERSION:=1.2.0
 PKG_RELEASE=1
 
 
@@ -19,11 +19,12 @@ PKG_LICENSE_FILES:=COPYING
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=git://github.com/wifidog/wifidog-gateway.git
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
-PKG_SOURCE_VERSION:=717512c17e2689386c663869368d40e8e71e0bc6
+PKG_SOURCE_VERSION:=1.2.0
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION).tar.gz
 
 PKG_FIXUP:=autoreconf
-PKG_INSTALL:=1
+# do not run make install
+PKG_INSTALL:=0
 
 include $(INCLUDE_DIR)/package.mk
 
@@ -40,10 +41,9 @@ define Package/wifidog
 $(call Package/wifidog/Default)
 endef
 
-define Package/wifidog-ssl
+define Package/wifidog-tls
 $(call Package/wifidog/Default)
-  DEPENDS+=+libcyassl
-  VARIANT:=cyassl
+  DEPENDS+= +libcyassl
 endef
 
 
@@ -54,27 +54,43 @@ define Package/wifidog/description
 	of their Internet connection.
 endef
 
-define Package/wifidog-ssl/description
+define Package/wifidog-tls/description
 $(call Package/wifidog/description)
 
-This is a variant which can use SSL to talk to the auth server.
+This is a variant which can use TLS to talk to the auth server.
 endef
 
 define Package/wifidog/conffiles
 /etc/wifidog.conf
 endef
 
-Package/wifidog-ssl/conffiles = $(Package/wifidog/conffiles)
+Package/wifidog-tls/conffiles = $(Package/wifidog/conffiles)
 
-COPTS = ""
 
-ifeq ($(BUILD_VARIANT),cyassl)
-        COPTS += --enable-cyassl
-endif
+define Package/wifidog/configure
+	$(call Build/Configure/Default)
+endef
 
-CONFIGURE_ARGS += \
-        $(COPTS)
+# The "normal" way to build different variants of a package
+# is to define a variant in the Package definition and then
+# conditionally change build settings based on BUILD_VARIANT
+# 
+define Package/wifidog-tls/configure
+	$(call Build/Configure/Default,--enable-cyassl)
+endef
+
+
+define Package/wifidog/build
+	@echo "BUILD_VARIANT:" $(BUILD_VARIANT)
+	@echo "CONFIG_OPTS:" $(CONFIG_OPTS)
+	$(call Build/Compile/Default,clean all)
+endef
+
+Package/wifidog-tls/build = $(Package/wifidog/build)
+
 define Package/wifidog/install
+	@echo "BUILD_VARIANT:" $(BUILD_VARIANT)
+	@echo "CONFIG_OPTS:" $(CONFIG_OPTS)
 	$(INSTALL_DIR) $(1)/usr/bin
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/scripts/init.d/wifidog $(1)/usr/bin/wifidog-init
 	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/bin/wifidog $(1)/usr/bin/
@@ -88,7 +104,7 @@ define Package/wifidog/install
 	$(INSTALL_BIN) ./files/wifidog.init $(1)/etc/init.d/wifidog
 endef
 
-Package/wifidog-ssl/install = $(Package/wifidog/install)
+Package/wifidog-tls/install = $(Package/wifidog/install)
 
 $(eval $(call BuildPackage,wifidog))
-$(eval $(call BuildPackage,wifidog-ssl))
+$(eval $(call BuildPackage,wifidog-tls))
