@@ -15,8 +15,6 @@ start_service() {
   	procd_set_param respawn # respawn automatically if something died
   	procd_set_param file /etc/wifidog.conf 
   	procd_close_instance
-	# wait for firewall rules to be setup
-	/etc/init.d/wifidog-fw-extra enabled && /etc/init.d/wifidog-fw-extra restart &
 
 }
 
