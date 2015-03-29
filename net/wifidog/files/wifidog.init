@@ -8,16 +8,15 @@ EXTRA_COMMANDS="status"
 EXTRA_HELP="        status Print the status of the service"
 
 start_service() {
-	procd_open_instance
-  	# -s: log to syslog
-  	# -f: run in foreground
-  	procd_set_param command /usr/bin/wifidog -s -f 
-  	procd_set_param respawn # respawn automatically if something died
-  	procd_set_param file /etc/wifidog.conf 
-  	procd_close_instance
-
+    procd_open_instance
+    # -s: log to syslog
+    # -f: run in foreground
+    procd_set_param command /usr/bin/wifidog -s -f 
+    procd_set_param respawn # respawn automatically if something died
+    procd_set_param file /etc/wifidog.conf 
+    procd_close_instance
 }
 
 status() {
-	/usr/bin/wifidog-init status
+    /usr/bin/wifidog-init status
 }
