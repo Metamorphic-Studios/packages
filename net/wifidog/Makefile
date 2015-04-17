@@ -92,7 +92,6 @@ define Package/wifidog/install
 	@echo "BUILD_VARIANT:" $(BUILD_VARIANT)
 	@echo "CONFIG_OPTS:" $(CONFIG_OPTS)
 	$(INSTALL_DIR) $(1)/usr/bin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/scripts/init.d/wifidog $(1)/usr/bin/wifidog-init
 	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/bin/wifidog $(1)/usr/bin/
 	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/bin/wdctl $(1)/usr/bin/
 	$(INSTALL_DIR) $(1)/usr/lib

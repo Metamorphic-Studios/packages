@@ -18,5 +18,5 @@ start_service() {
 }
 
 status() {
-    /usr/bin/wifidog-init status
+    /usr/bin/wdctl status
 }
