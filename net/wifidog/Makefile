@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2006,2013 OpenWrt.org
+# Copyright (C) 2006,2015 OpenWrt.org
 #
 # This is free software, licensed under the GNU General Public License v2.
 # See /LICENSE for more information.
@@ -13,6 +13,8 @@ PKG_RELEASE=1
 
 
 PKG_LICENSE:=GPL-2.0
+# Note: Packaging is maintained upstream at
+# https://github.com/wifidog/packages
 PKG_MAINTAINER:=Michael Haas <haas@computerlinguist.org>
 PKG_LICENSE_FILES:=COPYING
 
