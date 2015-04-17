@@ -19,7 +19,7 @@ PKG_LICENSE_FILES:=COPYING
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=git://github.com/wifidog/wifidog-gateway.git
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
-PKG_SOURCE_VERSION:=master
+PKG_SOURCE_VERSION:=1.2.1
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION).tar.gz
 
 PKG_FIXUP:=autoreconf
@@ -57,7 +57,7 @@ endef
 define Package/wifidog-tls/description
 $(call Package/wifidog/description)
 
-This is a variant which can use TLS to talk to the auth server.
+This variant can talk TLS to the auth server.
 endef
 
 define Package/wifidog/conffiles
